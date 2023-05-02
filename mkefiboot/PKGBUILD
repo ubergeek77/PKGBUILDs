@@ -9,6 +9,6 @@ source=("mkefiboot" "99-mkefiboot.hook")
 sha256sums=('SKIP' 'SKIP')
 
 package() {
-    install -Dm755 "${srcdir}/mkefiboot" "${pkgdir}/usr/sbin/mkefiboot"
+    install -Dm755 "${srcdir}/mkefiboot" "${pkgdir}/usr/bin/mkefiboot"
     install -Dm644 "${srcdir}/99-mkefiboot.hook" "${pkgdir}/etc/pacman.d/hooks/99-mkefiboot.hook"
 }
