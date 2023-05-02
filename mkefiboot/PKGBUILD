@@ -1,0 +1,14 @@
+pkgname=mkefiboot
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="A script and pacman hook to automatically create efi boot entries"
+arch=('any')
+license=('GPL')
+depends=('efibootmgr')
+source=("mkefiboot" "99-mkefiboot.hook")
+sha256sums=('SKIP' 'SKIP')
+
+package() {
+    install -Dm755 "${srcdir}/mkefiboot" "${pkgdir}/usr/local/bin/mkefiboot"
+    install -Dm644 "${srcdir}/99-mkefiboot.hook" "${pkgdir}/etc/pacman.d/hooks/99-mkefiboot.hook"
+}

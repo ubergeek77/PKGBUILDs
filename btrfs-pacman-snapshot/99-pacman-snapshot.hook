@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Create a read-only snapshot of the root subvolume before pacman operation
+When = PreTransaction
+Exec = /usr/share/libalpm/scripts/btrfs-pacman-snapshot.sh

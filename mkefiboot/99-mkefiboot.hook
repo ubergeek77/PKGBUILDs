@@ -1,0 +1,21 @@
+# path:   /home/klassiker/.local/share/repos/efistub/99-efistub.hook
+# author: klassiker [mrdotx]
+# github: https://github.com/mrdotx/pacman-hooks
+# date:   2022-12-23T14:01:54+0100
+
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = linux
+Target = linux-lts
+Target = linux-rt
+Target = linux-rt-lts
+Target = linux-zen
+Target = linux-hardened
+Target = linux-mainline
+
+[Action]
+Description = Updating UEFI...
+When = PostTransaction
+Exec = /home/klassiker/.local/share/repos/efistub/efistub.sh
