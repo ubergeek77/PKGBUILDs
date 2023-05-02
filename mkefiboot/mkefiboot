@@ -59,10 +59,11 @@ create_boot_entries() {
             current_boot_order="$current_boot_order,$new_boot_num"
         fi
 
-        # Restore the boot order
-        efibootmgr \
-            --bootorder "$current_boot_order" \
-            $quiet
+        if [[ "$set_first" != "true" ]]; then
+            # Restore the boot order
+            efibootmgr \
+                --bootorder "$current_boot_order"
+        fi
     done
 
 }
