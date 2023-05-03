@@ -4,12 +4,11 @@ pkgrel=1
 pkgdesc="A script and cron job to create and manage read-only btrfs snapshots of the home subvolume on boot"
 arch=('any')
 license=('GPL')
-depends=('btrfs-progs' 'cronie')
+depends=('btrfs-progs' 'runit')
 
 source=("btrfs-home-snapshot.sh" "btrfs-home-snapshot.cron")
 sha256sums=('SKIP' 'SKIP')
 
 package() {
-    install -Dm755 "${srcdir}/btrfs-home-snapshot.sh" "${pkgdir}/usr/local/scripts/btrfs-home-snapshot.sh"
-    install -Dm644 "${srcdir}/btrfs-home-snapshot.cron" "${pkgdir}/etc/cron.d/btrfs-home-snapshot.cron"
+    install -Dm755 "${srcdir}/btrfs-home-snapshot.sh" "${pkgdir}/etc/local.d/btrfs-home-snapshot.start"
 }
