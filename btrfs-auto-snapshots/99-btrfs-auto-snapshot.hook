@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Create a read-only snapshot of / and / before a pacman operation
+When = PreTransaction
+Exec = /usr/share/libalpm/scripts/btrfs-auto-snapshot.sh pacman / /root-snapshots pacman /home /home-snapshots

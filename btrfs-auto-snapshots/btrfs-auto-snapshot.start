@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/share/libalpm/scripts/btrfs-auto-snapshot.sh boot / /root-snapshots boot /home /home-snapshots

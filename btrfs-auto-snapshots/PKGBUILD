@@ -1,0 +1,15 @@
+pkgname=btrfs-auto-snapshot
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Script and pacman hooks to create btrfs snapshots at boot and before pacman operations"
+arch=('any')
+license=('GPL')
+depends=('btrfs-progs' 'pacman')
+source=("btrfs-auto-snapshot.sh" "99-btrfs-auto-snapshot.hook" "btrfs-auto-snapshot.start")
+sha256sums=('SKIP' 'SKIP' 'SKIP')
+
+package() {
+    install -Dm755 "${srcdir}/btrfs-auto-snapshot.sh" "${pkgdir}/usr/share/libalpm/scripts/btrfs-auto-snapshot.sh"
+    install -Dm644 "${srcdir}/99-btrfs-auto-snapshot.hook" "${pkgdir}/etc/pacman.d/hooks/99-btrfs-auto-snapshot.hook"
+    install -Dm755 "${srcdir}/btrfs-auto-snapshot.start" "${pkgdir}/etc/local.d/btrfs-auto-snapshot.start"
+}
