@@ -5,7 +5,7 @@ set -e
 
 # Check if running as root
 if [ "$(id -u)" -ne 0 ]; then
-    echo "This script must be run as root."
+    echo >&2 "This script must be run as root."
     exit 1
 fi
 
