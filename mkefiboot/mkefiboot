@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 config_directory="/etc/mkefiboot.d/"
 mkdir -p $config_directory
 
@@ -26,7 +28,7 @@ create_boot_entries() {
         version_number="${version_number:=false}"
 
         # version number
-        [ version_number = true ] &&
+        [ version_number = "true" ] &&
             package_version="$(
                 pacman -Q --color never "linux" |
                     cut -d ' ' -f2 |
