@@ -21,7 +21,7 @@ create_snapshot() {
     fi
 
     # Create a snapshot
-    snapshot_name="${SNAPSHOT_PREFIX:?}-${timestamp}"
+    snapshot_name="${timestamp}-${SNAPSHOT_SUFFIX:?}"
     if [[ -e "${SNAPSHOT_DEST:?}/${snapshot_name}" ]]; then
         echo >&2 "ERROR: Cannot create snapshot: path already exists (${SNAPSHOT_DEST:?}/${snapshot_name})"
         return 1
@@ -30,8 +30,8 @@ create_snapshot() {
 
     # Clean up old snapshots
     snapshots_to_keep=3
-    current_snapshots=($(ls -1t ${SNAPSHOT_DEST:?} | grep "^${SNAPSHOT_PREFIX:?}-"))
-    delete_candidates=($(find "${SNAPSHOT_DEST:?}" -maxdepth 1 -type d -name "${SNAPSHOT_PREFIX:?}-*" -mtime +7 | sort))
+    current_snapshots=($(ls -1t ${SNAPSHOT_DEST:?} | grep "-${SNAPSHOT_SUFFIX:?}$"))
+    delete_candidates=($(find "${SNAPSHOT_DEST:?}" -maxdepth 1 -type d -name "*-${SNAPSHOT_SUFFIX:?}" -mtime +7 | sort))
 
     for i in "${!delete_candidates[@]}"; do
         if [ "${#current_snapshots[@]}" -gt "${snapshots_to_keep}" ]; then
@@ -45,7 +45,7 @@ create_snapshot() {
 
 # Check arguments and call create_snapshot for every pair of 3 arguments
 while [[ $# -ge 3 ]]; do
-    SNAPSHOT_PREFIX="$1"
+    SNAPSHOT_SUFFIX="$1"
     SNAPSHOT_SRC="$2"
     SNAPSHOT_DEST="$3"
     create_snapshot
