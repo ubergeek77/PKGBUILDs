@@ -6,6 +6,6 @@ Type = Package
 Target = *
 
 [Action]
-Description = Create a read-only snapshot of / and /home before a pacman operation
+Description = Create read-only snapshots of / and /home before a pacman operation
 When = PreTransaction
 Exec = /usr/share/libalpm/scripts/btrfs-auto-snapshot.sh pacman / /root-snapshots pacman /home /home-snapshots
