@@ -6,7 +6,7 @@ arch=('any')
 license=('GPL')
 depends=('btrfs-progs' 'runit')
 
-source=("btrfs-home-snapshot.sh" "btrfs-home-snapshot.cron")
+source=("btrfs-home-snapshot.sh")
 sha256sums=('SKIP' 'SKIP')
 
 package() {
