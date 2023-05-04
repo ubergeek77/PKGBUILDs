@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit on error
+set -e
+
 # Check if running as root
 if [ "$(id -u)" -ne 0 ]; then
     echo "This script must be run as root."
@@ -19,6 +22,10 @@ create_snapshot() {
 
     # Create a snapshot
     snapshot_name="${SNAPSHOT_PREFIX:?}-${timestamp}"
+    if [[ -e "${SNAPSHOT_DEST:?}/${snapshot_name}" ]]; then
+        echo >&2 "ERROR: Cannot create snapshot: path already exists (${SNAPSHOT_DEST:?}/${snapshot_name})"
+        return 1
+    fi
     btrfs subvolume snapshot -r ${SNAPSHOT_SRC:?} ${SNAPSHOT_DEST:?}/${snapshot_name}
 
     # Clean up old snapshots
@@ -45,13 +52,8 @@ while [[ $# -ge 3 ]]; do
     shift 3
 done
 
-# If there are no more arguments, we are done
-if [[ $# -gt 0 ]]; then
-    echo "Done."
-    exit 0
-fi
-
-# If there are arguments but less than 3, something is wrong
-if [[ $# -lt 3 ]]; then
-    echo >&2 "Invalid arguments. Expected: [SNAPSHOT_PREFIX SNAPSHOT_SRC SNAPSHOT_DEST]..."
+# Exit if there are no more arguments or less than 3 after shifting
+if [[ $# -gt 0 && $# -lt 3 ]]; then
+    echo >&2 "Error: not enough arguments."
+    exit 1
 fi
