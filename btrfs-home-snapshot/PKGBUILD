@@ -7,7 +7,7 @@ license=('GPL')
 depends=('btrfs-progs' 'runit')
 
 source=("btrfs-home-snapshot.sh")
-sha256sums=('SKIP' 'SKIP')
+sha256sums=('SKIP')
 
 package() {
     install -Dm755 "${srcdir}/btrfs-home-snapshot.sh" "${pkgdir}/etc/local.d/btrfs-home-snapshot.start"
