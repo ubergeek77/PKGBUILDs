@@ -16,12 +16,25 @@ create_boot_entries() {
             partition="$(blkid -U $disk_uuid | tail -c 2)"
         fi
 
+        kernel_name="${kernel_name:=linux}"
         label="${label:=Linux}"
         disk="${disk:?}"
         partition="${partition:?}"
         loader="${loader:=/vmlinuz-linux}"
         options="${options:=}"
         set_first="${set_first:=false}"
+        version_number="${version_number:=false}"
+
+        # version number
+        [ version_number = true ] &&
+            package_version="$(
+                pacman -Q --color never "linux" |
+                    cut -d ' ' -f2 |
+                    cut -d '.' -f-3 |
+                    cut -d '-' -f1
+            )" &&
+            label="$label $package_version" &&
+            unset package_version
 
         # Find an existing entry with the same label prefix
         existing_boot_num=$(efibootmgr | grep "\* $label" | cut -d' ' -f 1 | sed 's/.$//' | sed 's/Boot//')
