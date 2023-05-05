@@ -30,7 +30,7 @@ create_snapshot() {
 
     # Clean up old snapshots
     snapshots_to_keep=3
-    current_snapshots=($(ls -1t ${SNAPSHOT_DEST:?} | grep "-${SNAPSHOT_SUFFIX:?}$"))
+    current_snapshots=($(ls -1t ${SNAPSHOT_DEST:?} | grep -e "-${SNAPSHOT_SUFFIX:?}$"))
     delete_candidates=($(find "${SNAPSHOT_DEST:?}" -maxdepth 1 -type d -name "*-${SNAPSHOT_SUFFIX:?}" -mtime +7 | sort))
 
     for i in "${!delete_candidates[@]}"; do
